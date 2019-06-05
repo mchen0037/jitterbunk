@@ -1,0 +1,16 @@
+<h1>Welcome to Bunk!</h1>
+{% if just_bunked%}
+  <p style="font-style: italic; color: blue">Successfully bunked!</p>
+{% endif %}  
+{% if latest_bunks %}
+  <ul>
+    {% for bunk in latest_bunks %}
+      <li>BUNK! From
+        <a href="/profile/{{bunk.from_user.id}}">{{bunk.from_user}}</a>
+         to <a href="/profile/{{bunk.to_user.id}}">{{bunk.to_user}}</a>
+        </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No Bunks yet!</p>
+{% endif %}
