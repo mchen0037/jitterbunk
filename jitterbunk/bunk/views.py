@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponse, get_object_or_404
 from django.http import HttpResponseRedirect
+from django.http import Http404
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout as auth_logout
@@ -22,7 +23,9 @@ def profile(request, user_id):
     user = get_object_or_404(User, pk=user_id)
 
     bunks_between_users = Bunk.objects.order_by('-time').filter(
-                            Q(from_user=user) | Q(to_user=user))
+        Q(from_user=user) | Q(to_user=user)
+    )
+
     recent_bunks = bunks_between_users[:10]
 
     bunk_score = 0
@@ -39,12 +42,20 @@ def profile(request, user_id):
 
 @login_required
 def bunk(request):
-    to_user = get_object_or_404(User, pk=request.POST['to_user'])
-    from_user = get_object_or_404(User, pk=request.POST['from_user'])
+    try:
+        to_user_pk = int(request.POST['to_user'])
+        from_user_pk = int(request.POST['from_user'])
+    except (ValueError, KeyError):
+        raise Http404
+
+    to_user = get_object_or_404(User, pk=to_user_pk)
+    from_user = get_object_or_404(User, pk=from_user_pk)
+
     new_bunk = Bunk(from_user=from_user, to_user=to_user)
     new_bunk.save()
-    print(context)
+
     messages.success(request, "Successfully bunked %s!" % (from_user.first_name))
+
     return HttpResponseRedirect('/')
 
 def logout(request, **kwargs):

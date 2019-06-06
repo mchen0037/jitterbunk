@@ -21,7 +21,7 @@
 {% else %}
   <p>No Bunks yet!</p>
 {% endif %}
-<p><a href="/logout">Logout</a></p>
+<p><a href="{% url 'bunk-logout' %}">Logout</a></p>
 
 {% else %}
   <p>You are not logged in!</p>

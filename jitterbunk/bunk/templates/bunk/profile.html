@@ -36,7 +36,7 @@
           to <a href="/profile/{{bunk.to_user.id}}">{{bunk.to_user.first_name}}</a></li>
         {% else %}
         <li style="color:red;">BUNK! From
-          <a href="/profile/{{bunk.from_user.id}}">{{bunk.from_user.first_name}}</a>
+          <a href="{% url 'profile' bunk.from_user.id %}">{{bunk.from_user.first_name}}</a>
           to <a href="/profile/{{bunk.to_user.id}}">{{bunk.to_user.first_name}}</a></li>
         {% endif %}
       {% endfor %}
