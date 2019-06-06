@@ -7,15 +7,6 @@ from django.utils import timezone
 
 
 import random
-# Delete Everything
-# users = User.objects.all()
-# for u in users:
-#     u.delete()
-
-# new_users = ["John", "Calvin", "Andy", "Zach", "Mighty", "Robert"]
-# for nu in new_users:
-#     u = User(user=nu, photo="default")
-#     u.save()
 
 for i in range(10000):
     people = random.sample(set(User.objects.all()),2)

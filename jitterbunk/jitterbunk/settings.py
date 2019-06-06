@@ -127,4 +127,3 @@ STATIC_URL = '/static/'
 
 # https://wsvincent.com/django-user-authentication-tutorial-login-and-logout/
 LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'

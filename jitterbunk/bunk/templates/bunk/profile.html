@@ -12,12 +12,8 @@
     {% csrf_token %}
     <input type="submit" value="Bunk!">
     <input type="hidden" name="to_user" value={{profile_user.id}} />
-    <!--  FIXME: All from bunkees are now from 13-->
     <input type="hidden" name="from_user" value={{user.id}} />
   </form>
-  <!-- TODO: BEGIN
-    Functionality to bunk people here (button/input here)
-       TODO: END  -->
 
   {% if bunk_score %}
     {% if bunk_score > 0 %}
