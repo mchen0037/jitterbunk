@@ -19,4 +19,8 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('bunk.urls')),
+    # https://wsvincent.com/django-user-authentication-tutorial-login-and-logout/
+    url(r'^accounts/', include('django.contrib.auth.urls')),
+    url(r'^logout/$', 'django.contrib.auth.views.logout',
+                          {'next_page': '/'}),
 ]

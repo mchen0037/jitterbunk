@@ -1,19 +1,19 @@
 <!--
     context = {
-        'user' : user,
+        'profile_user' : user,
         'recent_bunks' : recent_bunks,
         'bunk_score' : bunk_score,
         'total_bunks' : positive_bunk_score
     }
 -->
-{% if user %}
-  <h1>{{user}}</h1>
+{% if user.is_authenticated %}
+  <h1>{{profile_user.first_name}} {{profile_user.last_name}}</h1>
   <form action="/bunk" method="post">
     {% csrf_token %}
     <input type="submit" value="Bunk!">
-    <input type="hidden" name="to_user" value={{user.id}} />
+    <input type="hidden" name="to_user" value={{profile_user.id}} />
     <!--  FIXME: All from bunkees are now from 13-->
-    <input type="hidden" name="from_user" value={{13}} />
+    <input type="hidden" name="from_user" value={{user.id}} />
   </form>
   <!-- TODO: BEGIN
     Functionality to bunk people here (button/input here)
@@ -34,15 +34,19 @@
   {% if recent_bunks %}
     <ul>
       {% for bunk in recent_bunks %}
-        {% if bunk.from_user == user %}
-        <li style="color:green;">BUNK! From {{bunk.from_user}} to {{bunk.to_user}}</li>
+        {% if bunk.from_user == profile_user %}
+        <li style="color:green;">BUNK! From
+          <a href="/profile/{{bunk.from_user.id}}">{{bunk.from_user.first_name}}</a>
+          to <a href="/profile/{{bunk.to_user.id}}">{{bunk.to_user.first_name}}</a></li>
         {% else %}
-        <li style="color:red;">BUNK! From {{bunk.from_user}} to {{bunk.to_user}}</li>
+        <li style="color:red;">BUNK! From
+          <a href="/profile/{{bunk.from_user.id}}">{{bunk.from_user.first_name}}</a>
+          to <a href="/profile/{{bunk.to_user.id}}">{{bunk.to_user.first_name}}</a></li>
         {% endif %}
       {% endfor %}
     </ul>
   {% else %}
-    <p>{{user}} doesn't have any bunks yet!</p>
+    <p>{{profile_user.first_name}} doesn't have any bunks yet!</p>
   {% endif %}
 {% else %}
   <p>This person doesn't exist!</p>
